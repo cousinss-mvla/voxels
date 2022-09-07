@@ -1,6 +1,8 @@
 package voxels.graphic;
 
-public class Render {
+//import java.util.Random;
+
+public abstract class Render {
 	public final int width;
 	public final int height;
 	public final int[] pixels;
@@ -9,25 +11,14 @@ public class Render {
 		this.width = width;
 		this.height = height;
 		this.pixels = new int[width*height];
-	}
-	
-	public void draw(Render render, int xOffset, int yOffset) {
-		for(int y = 0; y < render.height; y++) {
-			int yPix = y + yOffset;
-			if(yPix < 0) {
-				continue;
-			}
-			if(yPix >= height) {
-				return;
-			}
-			for(int x = 0; x < render.width; x++) {
-				int xPix = x + xOffset;
-				if(xPix < 0 || xPix >= width) {
-					break;
-				}
-				
-				pixels[xPix + yPix*width] = render.pixels[x + y * render.width];
-			}	
+//		Random r = new Random();
+//		for(int i = 0; i < pixels.length; i++) {
+//			this.pixels[i] = r.nextInt();
+//		}
+		for(int i = 0; i < width*height; i++) {
+		pixels[i] = 0;
 		}
 	}
+	
+	public abstract void render();
 }

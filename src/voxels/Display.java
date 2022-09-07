@@ -8,22 +8,25 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
-import voxels.graphic.Screen;
+import voxels.game.world.ArrayWorld;
+import voxels.graphic.Render;
 
 public class Display extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
 	public static final String TITLE = "Voxels 0.0.1";
-	private static final double FRAMES_PER_SECOND = 200.0;
+	private final double FRAMES_PER_SECOND;
 	
 	private Thread thread;
 	private boolean running = false;
-	private Screen render;
+	private Render render;
 	private BufferedImage img;
 	private int[] pixels;
 	
-	public Display() {
+	public Display(int fps) {
+		FRAMES_PER_SECOND = fps;
+		
 		JFrame frame = new JFrame();
 		frame.add(this);
 		frame.setSize(WIDTH, HEIGHT);
@@ -33,7 +36,7 @@ public class Display extends Canvas implements Runnable {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		
-		render = new Screen(WIDTH, HEIGHT);
+		render = new CameraRender(WIDTH, HEIGHT, new ArrayWorld());
 		img = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		pixels = ((DataBufferInt) img.getRaster().getDataBuffer()).getData();
 	}
@@ -87,17 +90,17 @@ public class Display extends Canvas implements Runnable {
 	}
 	
 	private void render() {
-		BufferStrategy bs = this.getBufferStrategy();
-		if(bs == null) {
-			createBufferStrategy(3);
-			return;
-		}
 		for(int i = 0; i < WIDTH * HEIGHT; i++) {
 			pixels[i] = render.pixels[i];
 		}
 		
 		render.render();
 		
+		BufferStrategy bs = this.getBufferStrategy();
+		if(bs == null) {
+			createBufferStrategy(3);
+			return;
+		}
 		Graphics g = bs.getDrawGraphics();
 		g.drawImage(img, 0, 0, WIDTH, HEIGHT, null);
 		g.dispose();
