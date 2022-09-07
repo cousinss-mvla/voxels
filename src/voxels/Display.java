@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 
 import voxels.game.world.ArrayWorld;
 import voxels.graphic.Render;
+import voxels.graphic.camera.CameraRender;
 
 public class Display extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
