@@ -33,5 +33,9 @@ public class CameraRender extends Render {
 	private int rgb(int red, int green, int blue) {
 		return (((red<<8)+green)<<8)+blue;
 	}
+	
+	public Camera getCamera() {
+		return this.camera;
+	}
 
 }

@@ -86,8 +86,9 @@ public class Display extends Canvas implements Runnable {
 	}
 
 	private void tick() {
-		// TODO Auto-generated method stub
-		
+		((CameraRender)render).getCamera().setX(((CameraRender)render).getCamera().getX() + 1);
+//		((CameraRender)render).getCamera().setX(10);
+		((CameraRender)render).getCamera().setY(((CameraRender)render).getCamera().getY() + 0.01);
 	}
 	
 	private void render() {
